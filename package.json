@@ -24,7 +24,7 @@
 		"prebuild": "rimraf dist",
 		"build": "tsc --build tsconfig.build.json",
 		"postbuild": "yarn local-pack",
-		"prelocal-pack": "rimraf decorated-dataloaders-*.tgz && npm version patch",
+		"prelocal-pack": "rimraf decorated-dataloaders-*.tgz && npm version patch -f",
 		"local-pack": "npm pack"
 	},
 	"devDependencies": {
