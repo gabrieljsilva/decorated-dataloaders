@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DataloaderMetadataContainer = void 0;
-const types_1 = require("../types");
+const adjacency_graph_1 = require("../types/adjacency-graph");
 class DataloaderMetadataContainer {
     static AddRelationMetadata(parent, child, field, metadata) {
         let relationMetadata = DataloaderMetadataContainer.relations.getEdges(parent)?.get(child);
@@ -64,7 +64,7 @@ class DataloaderMetadataContainer {
     }
 }
 exports.DataloaderMetadataContainer = DataloaderMetadataContainer;
-DataloaderMetadataContainer.relations = new types_1.AdjacencyGraph();
+DataloaderMetadataContainer.relations = new adjacency_graph_1.AdjacencyGraph();
 DataloaderMetadataContainer.loadThroughMetadata = new Map();
 DataloaderMetadataContainer.aliases = new Map();
 DataloaderMetadataContainer.dataloaderHandlersMappedByKey = new Map();

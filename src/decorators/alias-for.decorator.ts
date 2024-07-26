@@ -1,6 +1,6 @@
 import type { Type } from "@nestjs/common";
-import type { AliasForReturnFn } from "../types";
-import { DataloaderMetadataContainer } from "../utils";
+import { AliasForReturnFn } from "../types/dataloader.types";
+import { DataloaderMetadataContainer } from "../utils/dataloader-metadata-container";
 
 export function AliasFor(provider: AliasForReturnFn) {
 	return (target: NonNullable<unknown>) => {

@@ -1,7 +1,7 @@
-import { type Type } from "@nestjs/common";
+import { Type } from "@nestjs/common";
 import { ModuleRef } from "@nestjs/core";
-import type { DataloaderMetadataService } from "./dataloader-metadata.service";
-import type { CacheMapProvider } from "./dataloader.module";
+import { CacheMapService } from "./cache-map.service";
+import { DataloaderMetadataService } from "./dataloader-metadata.service";
 interface LoadParams<Parent> {
     from: Type;
     field?: string;
@@ -9,10 +9,10 @@ interface LoadParams<Parent> {
 }
 export declare class DataloaderService {
     private readonly moduleRef;
-    private readonly cacheMapProvider;
     private readonly dataloaderMetadataService;
+    private readonly cacheMapService;
     private dataloaderMappedByParentField;
-    constructor(moduleRef: ModuleRef, cacheMapProvider: CacheMapProvider, dataloaderMetadataService: DataloaderMetadataService);
+    constructor(moduleRef: ModuleRef, dataloaderMetadataService: DataloaderMetadataService, cacheMapService: CacheMapService);
     load<Parent>(child: Type, params: LoadParams<Parent>): Promise<any>;
     private getOrCreateDataloader;
     private createDataloader;

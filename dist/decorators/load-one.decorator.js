@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LoadOne = LoadOne;
-const types_1 = require("../types");
-const utils_1 = require("../utils");
+const dataloader_types_1 = require("../types/dataloader.types");
+const dataloader_metadata_container_1 = require("../utils/dataloader-metadata-container");
 function LoadOne(child, options) {
     const { by, where, on } = options;
     return (target, propertyKey) => {
         const parent = target.constructor;
-        utils_1.DataloaderMetadataContainer.AddRelationMetadata(() => parent, child, propertyKey, new types_1.RelationMetadata({
+        dataloader_metadata_container_1.DataloaderMetadataContainer.AddRelationMetadata(() => parent, child, propertyKey, new dataloader_types_1.RelationMetadata({
             by: by,
             where: where,
-            type: types_1.RelationType.OneToOne,
+            type: dataloader_types_1.RelationType.OneToOne,
             on: on,
         }));
     };

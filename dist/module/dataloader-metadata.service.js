@@ -11,7 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DataloaderMetadataService = void 0;
 const common_1 = require("@nestjs/common");
-const types_1 = require("../types");
+const adjacency_graph_1 = require("../types/adjacency-graph");
 let DataloaderMetadataService = class DataloaderMetadataService {
     constructor(relations, aliases, dataloaderHandlersMappedByKey) {
         this.relations = relations;
@@ -31,7 +31,7 @@ let DataloaderMetadataService = class DataloaderMetadataService {
 exports.DataloaderMetadataService = DataloaderMetadataService;
 exports.DataloaderMetadataService = DataloaderMetadataService = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [types_1.AdjacencyGraph,
+    __metadata("design:paramtypes", [adjacency_graph_1.AdjacencyGraph,
         Map,
         Map])
 ], DataloaderMetadataService);

@@ -1,4 +1,4 @@
-import { type JoinProperty, type RelationNodeFn } from "../types";
+import { JoinProperty, RelationNodeFn } from "../types/dataloader.types";
 interface LoadManyOptions<Child, Parent> {
     by: (parent: Parent) => JoinProperty;
     where: (child: Child) => JoinProperty;

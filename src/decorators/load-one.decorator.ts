@@ -1,6 +1,6 @@
 import type { Type } from "@nestjs/common";
-import { type JoinProperty, RelationMetadata, type RelationNodeFn, RelationType } from "../types";
-import { DataloaderMetadataContainer } from "../utils";
+import { JoinProperty, RelationMetadata, RelationNodeFn, RelationType } from "../types/dataloader.types";
+import { DataloaderMetadataContainer } from "../utils/dataloader-metadata-container";
 
 interface LoadOneOptions<Child, Parent> {
 	by: (parent: Parent) => JoinProperty;

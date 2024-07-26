@@ -1,4 +1,4 @@
-import { type RelationNodeFn } from "../types";
+import { RelationNodeFn } from "../types/dataloader.types";
 export interface LoadThroughOptions {
     joinProperty: string;
 }

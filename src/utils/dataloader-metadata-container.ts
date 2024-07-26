@@ -1,14 +1,14 @@
 import { Type } from "@nestjs/common";
+import { AdjacencyGraph } from "../types/adjacency-graph";
+import { DataloaderHandlerMetadata } from "../types/dataloader-handler-metadata";
 import {
 	AliasForReturnFn,
-	DataloaderHandlerMetadata,
 	DataloaderKey,
-	LoadThroughMetadata,
 	RelationField,
 	RelationMetadata,
 	RelationNodeFn,
-} from "../types";
-import { AdjacencyGraph } from "../types";
+} from "../types/dataloader.types";
+import { LoadThroughMetadata } from "../types/load-through-metadata";
 
 export class DataloaderMetadataContainer {
 	private static readonly relations = new AdjacencyGraph<RelationNodeFn, Map<RelationField, RelationMetadata>>();

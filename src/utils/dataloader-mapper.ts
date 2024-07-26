@@ -1,4 +1,4 @@
-import { JoinProperty, RelationMetadata } from "../types";
+import { JoinProperty, RelationMetadata } from "../types/dataloader.types";
 
 export class DataloaderMapper {
 	static map(metadata: RelationMetadata, keys: Array<JoinProperty>, entities: Array<unknown>) {

@@ -1,35 +1,36 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DataloaderModule = exports.CacheMapProvider = void 0;
-const utils_1 = require("../utils");
+exports.DataloaderModule = void 0;
+const dataloader_metadata_container_1 = require("../utils/dataloader-metadata-container");
+const cache_map_service_1 = require("./cache-map.service");
 const dataloader_metadata_service_1 = require("./dataloader-metadata.service");
 const dataloader_service_1 = require("./dataloader.service");
-class CacheMapProvider {
-}
-exports.CacheMapProvider = CacheMapProvider;
 class DataloaderModule {
     static register(options) {
-        const { global = options.global || false, getCacheMap, cache = false, providers: dataloaders = [] } = options || {};
-        const aliases = utils_1.DataloaderMetadataContainer.resolveAliases();
-        const dataloaderHandlers = utils_1.DataloaderMetadataContainer.getDataloaderHandlers();
-        const relations = utils_1.DataloaderMetadataContainer.resolveRelations();
-        const providers = [
-            {
-                provide: CacheMapProvider,
-                useValue: { getCacheMap, cache },
-            },
-            {
-                provide: dataloader_metadata_service_1.DataloaderMetadataService,
-                useValue: new dataloader_metadata_service_1.DataloaderMetadataService(relations, aliases, dataloaderHandlers),
-            },
-            dataloader_service_1.DataloaderService,
-            ...dataloaders,
-        ];
+        const { global = false, cache = true, getCacheMap } = options || {};
         return {
             module: DataloaderModule,
-            providers: providers,
-            exports: providers,
-            global: true,
+            providers: [
+                dataloader_service_1.DataloaderService,
+                {
+                    provide: dataloader_metadata_service_1.DataloaderMetadataService,
+                    useFactory: () => {
+                        const relations = dataloader_metadata_container_1.DataloaderMetadataContainer.resolveRelations();
+                        const aliases = dataloader_metadata_container_1.DataloaderMetadataContainer.resolveAliases();
+                        const dataloaderHandlers = dataloader_metadata_container_1.DataloaderMetadataContainer.getDataloaderHandlers();
+                        return new dataloader_metadata_service_1.DataloaderMetadataService(relations, aliases, dataloaderHandlers);
+                    },
+                },
+                {
+                    provide: cache_map_service_1.CacheMapService,
+                    useValue: {
+                        cache,
+                        getCacheMap,
+                    },
+                },
+            ],
+            exports: [dataloader_service_1.DataloaderService],
+            global: global,
             imports: [],
         };
     }

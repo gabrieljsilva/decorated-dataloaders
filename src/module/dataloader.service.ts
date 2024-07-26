@@ -1,11 +1,10 @@
-import { Inject, Injectable, Scope, type Type } from "@nestjs/common";
+import { Injectable, Scope, Type } from "@nestjs/common";
 import { ModuleRef } from "@nestjs/core";
-import Dataloader from "dataloader";
-
-import type { JoinProperty, RelationMetadata } from "../types";
-import { DataloaderMapper } from "../utils";
-import type { DataloaderMetadataService } from "./dataloader-metadata.service";
-import type { CacheMapProvider } from "./dataloader.module";
+import * as DataLoader from "dataloader";
+import { JoinProperty, RelationMetadata } from "../types/dataloader.types";
+import { DataloaderMapper } from "../utils/dataloader-mapper";
+import { CacheMapService } from "./cache-map.service";
+import { DataloaderMetadataService } from "./dataloader-metadata.service";
 
 interface LoadParams<Parent> {
 	from: Type;
@@ -15,13 +14,12 @@ interface LoadParams<Parent> {
 
 @Injectable({ scope: Scope.REQUEST })
 export class DataloaderService {
-	private dataloaderMappedByParentField = new Map<Type, Map<string, Dataloader<JoinProperty, any>>>();
+	private dataloaderMappedByParentField = new Map<Type, Map<string, DataLoader<JoinProperty, any>>>();
 
 	constructor(
-		@Inject(ModuleRef)
 		private readonly moduleRef: ModuleRef,
-		private readonly cacheMapProvider: CacheMapProvider,
 		private readonly dataloaderMetadataService: DataloaderMetadataService,
+		private readonly cacheMapService: CacheMapService,
 	) {}
 
 	// todo -> add return types by overloading
@@ -96,9 +94,9 @@ export class DataloaderService {
 			return DataloaderMapper.map(metadata, keys, entities);
 		};
 
-		return new Dataloader<number | string, any>(batchFunction, {
-			cache: this.cacheMapProvider?.cache,
-			cacheMap: this.cacheMapProvider?.getCacheMap?.(),
+		return new DataLoader<number | string, any>(batchFunction, {
+			cache: this.cacheMapService?.cache,
+			cacheMap: this.cacheMapService?.getCacheMap?.(),
 		});
 	}
 }

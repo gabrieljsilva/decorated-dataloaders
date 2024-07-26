@@ -8,20 +8,19 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __param = (this && this.__param) || function (paramIndex, decorator) {
-    return function (target, key) { decorator(target, key, paramIndex); }
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DataloaderService = void 0;
 const common_1 = require("@nestjs/common");
 const core_1 = require("@nestjs/core");
-const dataloader_1 = require("dataloader");
-const utils_1 = require("../utils");
+const DataLoader = require("dataloader");
+const dataloader_mapper_1 = require("../utils/dataloader-mapper");
+const cache_map_service_1 = require("./cache-map.service");
+const dataloader_metadata_service_1 = require("./dataloader-metadata.service");
 let DataloaderService = class DataloaderService {
-    constructor(moduleRef, cacheMapProvider, dataloaderMetadataService) {
+    constructor(moduleRef, dataloaderMetadataService, cacheMapService) {
         this.moduleRef = moduleRef;
-        this.cacheMapProvider = cacheMapProvider;
         this.dataloaderMetadataService = dataloaderMetadataService;
+        this.cacheMapService = cacheMapService;
         this.dataloaderMappedByParentField = new Map();
     }
     async load(child, params) {
@@ -67,18 +66,19 @@ let DataloaderService = class DataloaderService {
         };
         const batchFunction = async (keys) => {
             const entities = await fetchRecords(keys);
-            return utils_1.DataloaderMapper.map(metadata, keys, entities);
+            return dataloader_mapper_1.DataloaderMapper.map(metadata, keys, entities);
         };
-        return new dataloader_1.default(batchFunction, {
-            cache: this.cacheMapProvider?.cache,
-            cacheMap: this.cacheMapProvider?.getCacheMap?.(),
+        return new DataLoader(batchFunction, {
+            cache: this.cacheMapService?.cache,
+            cacheMap: this.cacheMapService?.getCacheMap?.(),
         });
     }
 };
 exports.DataloaderService = DataloaderService;
 exports.DataloaderService = DataloaderService = __decorate([
     (0, common_1.Injectable)({ scope: common_1.Scope.REQUEST }),
-    __param(0, (0, common_1.Inject)(core_1.ModuleRef)),
-    __metadata("design:paramtypes", [core_1.ModuleRef, Function, Function])
+    __metadata("design:paramtypes", [core_1.ModuleRef,
+        dataloader_metadata_service_1.DataloaderMetadataService,
+        cache_map_service_1.CacheMapService])
 ], DataloaderService);
 //# sourceMappingURL=dataloader.service.js.map

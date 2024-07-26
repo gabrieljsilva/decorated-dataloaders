@@ -1,6 +1,7 @@
 import type { Type } from "@nestjs/common";
-import { LoadThroughMetadata, type RelationNodeFn } from "../types";
-import { DataloaderMetadataContainer } from "../utils";
+import { RelationNodeFn } from "../types/dataloader.types";
+import { LoadThroughMetadata } from "../types/load-through-metadata";
+import { DataloaderMetadataContainer } from "../utils/dataloader-metadata-container";
 
 export interface LoadThroughOptions {
 	joinProperty: string;
