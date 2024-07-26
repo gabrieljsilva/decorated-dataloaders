@@ -1,10 +1,12 @@
 {
 	"name": "decorated-dataloaders",
 	"description": "A module that helps you to create graphql dataloaders with decorators in Nest.js",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"main": "dist/index.js",
 	"license": "MIT",
-	"files": ["dist"],
+	"files": [
+		"dist"
+	],
 	"types": "dist/index.d.ts",
 	"author": {
 		"email": "contato@gabrieljs.dev",
@@ -20,7 +22,10 @@
 		"pretest:coverage": "rimraf coverage",
 		"test:coverage": "vitest --coverage --run",
 		"prebuild": "rimraf dist",
-		"build": "tsc --build tsconfig.build.json"
+		"build": "tsc --build tsconfig.build.json",
+		"postbuild": "yarn local-pack",
+		"prelocal-pack": "rimraf decorated-dataloaders-*.tgz && npm version patch",
+		"local-pack": "npm pack"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "1.8.3",
